@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { theme } from "./Styles/Palette";
+import AppRoutes from "./Routes/AppRoutes";
+import { useEffect } from "react";
+import { useDataLayerValue } from "./@app/ContextApi/DataLayer";
+import api from "./@app/service/rootApi";
 
 function App() {
+  const [{},dispatch] = useDataLayerValue();
+
+  const fetchProducts = async () => {
+    try {
+      const res = await api.get('products');
+      dispatch({ type: 'GET_ALL_PRODUCTS', products: res });
+    } catch (error) {
+      throw error;
+    }
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppRoutes />
+    </ThemeProvider>
   );
 }
 
 export default App;
+
+

@@ -1,0 +1,8 @@
+.page-cover {
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
